@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Table, text
+from sqlalchemy.orm import relationship,session
 from sqlalchemy.ext.declarative import declarative_base
 
 DATABASE_URI = 'sqlite:///database.db'
@@ -9,7 +9,7 @@ engine = create_engine(DATABASE_URI, echo=True)
 Base = declarative_base()
 
 
-sql_statement = text("SELECT * FROM Review")  # Replace 'your_table_name' with your actual table name
+sql_statement = text("SELECT * FROM reviews")  # Replace 'your_table_name' with your actual table name
 
 # Execute the SQL statement
 with engine.connect() as connection:
@@ -17,8 +17,8 @@ with engine.connect() as connection:
     rows = result.fetchall()
 
 # Display the retrieved data on the console
-for row in rows:
-    print(row)
+
+
 
 
 # Define a new table that represents the many-to-many relationship
@@ -54,8 +54,22 @@ class Customer(Base):
     id = Column(Integer, primary_key=True)
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
-     
-    
+
+    @classmethod
+    def  review(cls,session,customer_id):
+        customer_reviews = (
+           session.query(Review)
+           .join(cls)  # Assuming there's a relationship between cls and Review
+           .filter(Customer.id == customer_id)  # Replace Customer with your customer class name
+           .all()
+           )
+
+    # Print the star ratings of the customer's reviews
+        for review in customer_reviews:
+           print(f"Star Rating: {review.star_rating}")
+
+
+
     
     # Establish a one-to-many relationship between Customer and Review
     reviews = relationship("Review", back_populates="customer")
