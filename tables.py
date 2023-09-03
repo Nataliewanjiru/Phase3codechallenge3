@@ -20,18 +20,6 @@ with engine.connect() as connection:
 
 
 
-
-# Define a new table that represents the many-to-many relationship
-customerrestaurant = Table(
-    'customerrestaurant',
-    Base.metadata,
-    Column('restaurant_id', Integer, ForeignKey('restaurants.id')),
-    Column('customer_id', Integer, ForeignKey('customers.id'))
-)
-
-
-
-
 class Restaurant(Base):
     __tablename__ = 'restaurants'
 
@@ -75,9 +63,10 @@ class Restaurant(Base):
     # Establish a one-to-many relationship between Restaurant and Review
     reviews = relationship("Review", back_populates="restaurant")
 
-    # Establish a many-to-many relationship with Customer
-    customers = relationship("Customer", secondary=customerrestaurant, back_populates="restaurants")
 
+
+
+   
     
 
 
@@ -122,16 +111,34 @@ class Customer(Base):
             for name in restaurant_name:
                 print(f"Restaurant Names: {name.restaurant_name}")
 
-
-
+     
+    @classmethod
+    def  restaurant(cls,session,customer_id):
+      customer_name = (
+       session.query(Review)
+       .join(cls)  
+       .filter(Customer.id == customer_id)  
+       .all()
+       )
+  
+      for customer in customer_name:
+        name = (
+         session.query(Customer)
+         .join(Review)  
+         .filter(Review.id == restaurant.customer_id)  
+         .all()
+          )
+        for name in name:
+            print(f"customer Names: {name.first_name} + {name.last_name}")
+ 
 
 
     
     # Establish a one-to-many relationship between Customer and Review
     reviews = relationship("Review", back_populates="customer")
 
-    # Establish a many-to-many relationship with Restaurant
-    restaurants = relationship("Restaurant", secondary=customerrestaurant, back_populates="customers")
+
+
 
 
 
@@ -144,15 +151,23 @@ class Review(Base):
     restaurant_id = Column(Integer, ForeignKey('restaurants.id'), nullable=False)
     customer_id = Column(Integer, ForeignKey('customers.id'), nullable=False)
 
+    @classmethod
+    def customer(cls, session, customer_id):
+        customer_instances = (
+            session.query(Customer)
+            .join(Review)
+            .filter(Review.customer_id == customer_id)
+            .all()
+        )
+        
+        for instance in customer_instances:
+           print(f"Star Rating: {instance.star_rating}")
+        return customer_instances
+
     # Define relationships
     restaurant = relationship("Restaurant", back_populates="reviews")
     customer = relationship("Customer", back_populates="reviews")
 
-    def customer(self):
-        return self.customer
-    
-    def restaurant(self):
-        return self.restaurant
 
 # Create a SQLite database
 Base.metadata.create_all(bind=engine)

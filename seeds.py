@@ -25,10 +25,6 @@ review2 =Review(star_rating=2, restaurant_id=2, customer_id=2)
 review3 = Review(star_rating=4, restaurant_id = 3, customer_id = 3)
 review4 = Review(star_rating=4, restaurant_id = 3, customer_id = 1)
 
-#stmt = insert(customerrestaurant).values(
-#    restaurant_id=restaurant1.id,
-#    customer_id=customer1.id
-#)
 
 
 #session.add(customer1)
@@ -39,12 +35,14 @@ review4 = Review(star_rating=4, restaurant_id = 3, customer_id = 1)
 #session.add(restaurant3)
 #session.add(review1)
 #session.add(review2)
+#session.add(review3)
 #session.add(review4)
 
 #restaurant1.customer(session,1)
 #restaurant2.review(session,2)
-customer1.restaurant(session,1)
-#session.execute(stmt)
+#customer1.restaurant(session,1)
+review1.customer(session,1)
+
 
 session.commit()
 
