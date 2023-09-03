@@ -148,6 +148,12 @@ class Review(Base):
     restaurant = relationship("Restaurant", back_populates="reviews")
     customer = relationship("Customer", back_populates="reviews")
 
+    def customer(self):
+        return self.customer
+    
+    def restaurant(self):
+        return self.restaurant
+
 # Create a SQLite database
 Base.metadata.create_all(bind=engine)
 
