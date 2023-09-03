@@ -114,7 +114,7 @@ class Customer(Base):
       
       for restaurant in customer_restaurant:
             restaurant_name = (
-             session.query(Customer)
+             session.query(Restaurant)
              .join(Review)  
              .filter(Review.id == restaurant.customer_id)  
              .all()
