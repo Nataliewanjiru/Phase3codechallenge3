@@ -21,22 +21,30 @@ restaurant2 = Restaurant(restaurant_name = "Pizza Inn",restaurant_price = 2000)
 restaurant3 = Restaurant(restaurant_name = "Chicken Inn",restaurant_price = 3000)
 
 review1 = Review(star_rating = 3, restaurant_id = 1 , customer_id = 1)
-review2 =Review(star_rating=2, restaurant_id=2, customer_id=1)
+review2 =Review(star_rating=2, restaurant_id=2, customer_id=2)
+review3 = Review(star_rating=4, restaurant_id = 3, customer_id = 3)
+review4 = Review(star_rating=4, restaurant_id = 3, customer_id = 1)
 
-stmt = insert(customerrestaurant).values(
-    restaurant_id=restaurant1.id,
-    customer_id=customer1.id
-)
+#stmt = insert(customerrestaurant).values(
+#    restaurant_id=restaurant1.id,
+#    customer_id=customer1.id
+#)
 
 
+#session.add(customer1)
+#session.add(customer2)
 #session.add(customer3)
 #session.add(restaurant1)
 #session.add(restaurant2)
 #session.add(restaurant3)
-session.add(review2)
+#session.add(review1)
+#session.add(review2)
+#session.add(review4)
 
-customer1.review(session,1)
-session.execute(stmt)
+#restaurant1.customer(session,1)
+#restaurant2.review(session,2)
+customer1.restaurant(session,1)
+#session.execute(stmt)
 
 session.commit()
 

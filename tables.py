@@ -16,7 +16,7 @@ with engine.connect() as connection:
     result = connection.execute(sql_statement)
     rows = result.fetchall()
 
-# Display the retrieved data on the console
+
 
 
 
@@ -39,6 +39,39 @@ class Restaurant(Base):
     restaurant_name = Column(String(100), nullable=False)
     restaurant_price = Column(Integer)
 
+    @classmethod
+    def  customer(cls,session,restaurant_id):
+      restaurant_customers = (
+       session.query(Review)
+       .join(cls)  
+       .filter(Restaurant.id == restaurant_id)  
+       .all()
+       )
+      
+      for customer in restaurant_customers:
+            customer_name = (
+             session.query(Customer)
+             .join(Review)  
+             .filter(Review.id == customer.customer_id)  
+             .all()
+              )
+            for name in customer_name:
+                print(f"Customer Names: {name.first_name}")
+
+        
+    @classmethod
+    def  review(cls,session,restaurant_id):
+      restaurant_reviews = (
+         session.query(Review)
+         .join(cls)  
+         .filter(Restaurant.id == restaurant_id)  
+         .all()
+        )
+ # Print the star ratings of the customer's reviews
+      for review in restaurant_reviews:
+        print(f"Star Rating for the restaurant: {review.star_rating}")
+
+
     # Establish a one-to-many relationship between Restaurant and Review
     reviews = relationship("Review", back_populates="restaurant")
 
@@ -59,14 +92,37 @@ class Customer(Base):
     def  review(cls,session,customer_id):
         customer_reviews = (
            session.query(Review)
-           .join(cls)  # Assuming there's a relationship between cls and Review
-           .filter(Customer.id == customer_id)  # Replace Customer with your customer class name
+           .join(cls)  
+           .filter(Customer.id == customer_id)  
            .all()
            )
 
-    # Print the star ratings of the customer's reviews
+        # Print the star ratings of the customer's reviews
         for review in customer_reviews:
-           print(f"Star Rating: {review.star_rating}")
+             print(f"Star Rating: {review.star_rating}")
+
+
+    
+    @classmethod
+    def  restaurant(cls,session,customer_id):
+      customer_restaurant = (
+       session.query(Review)
+       .join(cls)  
+       .filter(Customer.id == customer_id)  
+       .all()
+       )
+      
+      for restaurant in customer_restaurant:
+            restaurant_name = (
+             session.query(Customer)
+             .join(Review)  
+             .filter(Review.id == restaurant.customer_id)  
+             .all()
+              )
+            for name in restaurant_name:
+                print(f"Restaurant Names: {name.restaurant_name}")
+
+
 
 
 
