@@ -113,7 +113,7 @@ class Customer(Base):
 
      
     @classmethod
-    def  restaurant(cls,session,customer_id):
+    def  full_name(cls,session,customer_id):
       customer_name = (
        session.query(Review)
        .join(cls)  
@@ -125,7 +125,7 @@ class Customer(Base):
         name = (
          session.query(Customer)
          .join(Review)  
-         .filter(Review.id == restaurant.customer_id)  
+         .filter(Review.id == customer.customer_id)  
          .all()
           )
         for name in name:
@@ -150,20 +150,20 @@ class Review(Base):
     star_rating = Column(Integer, nullable=False)
     restaurant_id = Column(Integer, ForeignKey('restaurants.id'), nullable=False)
     customer_id = Column(Integer, ForeignKey('customers.id'), nullable=False)
+    
 
-    @classmethod
-    def customer(cls, session, customer_id):
-        customer_instances = (
-            session.query(Customer)
-            .join(Review)
-            .filter(Review.customer_id == customer_id)
-            .all()
-        )
-        
-        for instance in customer_instances:
-           print(f"Star Rating: {instance.star_rating}")
-        return customer_instances
 
+    def get_customer(self, session, review_id):
+     customers = (
+        session.query(Customer)
+        .join(Review)  # Join the Customer and Review tables based on the relationship
+        .filter(Review.id == review_id)
+        .all()
+      )
+
+    # Close the session if needed
+     return customers
+       
     # Define relationships
     restaurant = relationship("Restaurant", back_populates="reviews")
     customer = relationship("Customer", back_populates="reviews")

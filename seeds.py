@@ -27,24 +27,26 @@ review4 = Review(star_rating=4, restaurant_id = 3, customer_id = 1)
 
 
 
-#session.add(customer1)
-#session.add(customer2)
-#session.add(customer3)
-#session.add(restaurant1)
-#session.add(restaurant2)
-#session.add(restaurant3)
-#session.add(review1)
-#session.add(review2)
-#session.add(review3)
-#session.add(review4)
+session.add(customer1)
+session.add(customer2)
+session.add(customer3)
+session.add(restaurant1)
+session.add(restaurant2)
+session.add(restaurant3)
+session.add(review1)
+session.add(review2)
+session.add(review3)
+session.add(review4)
 
-#restaurant1.customer(session,1)
-#restaurant2.review(session,2)
-#customer1.restaurant(session,1)
-review1.customer(session,1)
+restaurant1.customer(session,1)
+restaurant2.review(session,2)
+customer1.restaurant(session,1)
 
 
 session.commit()
+
+check = review1.get_customer(session, 1)
+print(check)
 
 session.close()
 
