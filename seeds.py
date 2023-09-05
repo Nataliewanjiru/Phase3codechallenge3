@@ -1,7 +1,9 @@
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import engine, create_engine, insert
+from sqlalchemy import engine, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from tables import *
+from customer import Customer
+from restaurant import Restaurant
+from review import Review
 
 DATABASE_URI = 'sqlite:///database.db'
 
@@ -38,15 +40,15 @@ session.add(review2)
 session.add(review3)
 session.add(review4)
 
-restaurant1.customer(session,1)
-restaurant2.review(session,2)
-customer1.restaurant(session,1)
-
+#restaurant1.customer(session,1)
+#restaurant2.review(session,2)
+#customer1.restaurant(session,1)
+#
 
 session.commit()
 
-check = review1.get_customer(session, 1)
-print(check)
-
+#check = review1.get_customer(session, 1)
+#print(check)
+#
 session.close()
 
