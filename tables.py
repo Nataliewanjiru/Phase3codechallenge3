@@ -18,23 +18,23 @@ Base = declarative_base()
 
 
 
-  #  def  customer(session,restaurant_id):
-  #    restaurant_customers = (
-  #     session.query(Review)
-  #     .join(Restaurant)  
-  #     .filter(Restaurant.id == restaurant_id)  
-  #     .all()
-  #     )
-  #    
-  #    for customer in restaurant_customers:
-  #          customer_name = (
-  #           session.query(Customer)
-  #           .join(Review)  
-  #           .filter(Review.id == customer.customer_id)  
-  #           .all()
-  #            )
-  #          for name in customer_name:
-  #              print(f"Customer Names: {name.first_name}")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 #
   #      
   #  @classmethod
