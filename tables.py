@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import relationship,session
+
 from sqlalchemy.ext.declarative import declarative_base
 
 DATABASE_URI = 'sqlite:///database.db'

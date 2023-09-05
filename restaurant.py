@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String,create_engine
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -16,7 +17,14 @@ class Restaurant(Base):
     restaurant_price = Column(Integer)
 
 
+    
+    def  review(self,table,session,restaurant_id):
+      restaurant_reviews = (session.query(table).join(self).filter(Restaurant.id == restaurant_id).all())
+      for review in restaurant_reviews:
+       print(f"Star Rating for the restaurant: {review.star_rating}")
 
+    
+    
 # Create a SQLite database
 Base.metadata.create_all(bind=engine)
 

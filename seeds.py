@@ -2,8 +2,11 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import engine, create_engine
 from sqlalchemy.orm import declarative_base
 from customer import *
-from restaurant import Restaurant
+from restaurant import *
 from review import *
+
+Customer.reviews = relationship("Review", back_populates="customer", uselist=True)
+Restaurant.reviews = relationship("Review", back_populates="restaurant", uselist=True)
 
 DATABASE_URI = 'sqlite:///database.db'
 
@@ -117,8 +120,8 @@ review4 = Review(star_rating=4, restaurant_id = 3, customer_id = 1)
 #session.add(review4)
 
 #restaurant1.customer(session,1)
-#restaurant2.review(session,2)
-customer1.full_name()
+restaurant2.review(Review,session,2)
+#customer1.full_name()
 
 
 session.commit()
