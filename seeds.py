@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import engine, create_engine
 from sqlalchemy.orm import declarative_base
-from customer import Customer
+from customer import *
 from restaurant import Restaurant
 from review import *
 
@@ -34,19 +34,57 @@ def  customer(session,restaurant_id):
 
 
 
-#function for reviews 
-#def get_customer(selfsession, review_id):
-# customers = (session.query(Customer).join(Review).filter(Review.id == review_id).all())
-# return customers 
-#def get_restaurant(self,session,review_id):
-#    restaurants = (session.query(Restaurant).join(Review).filter(Review.id == review_id).all())
-#    return restaurants
-#    
-#def full_review(self,session,review_id):
-#   fullName = (session.query(Customer.first_name, Customer.last_name, Review.star_rating).join(Review).filter(Review.id == review_id).all() )
-#   for name in fullName:
-#      print(f"Review by {name.first_name}  {name.last_name}: {name.star_rating}")
 
+
+
+
+
+
+
+
+
+
+
+
+  #  
+
+@classmethod
+def  restaurant(cls,session,customer_id):
+  customer_restaurant = (
+   session.query(Review)
+   .join(cls)  
+   .filter(Customer.id == customer_id)  
+   .all()
+   )
+  
+  for restaurant in customer_restaurant:
+        restaurant_name = (
+         session.query(Restaurant)
+         .join(Review)  
+         .filter(Review.id == restaurant.customer_id)  
+         .all()
+          )
+        for name in restaurant_name:
+            print(f"Restaurant Names: {name.restaurant_name}")
+ 
+@classmethod
+def  full_name(cls,session,customer_id):
+  customer_name = (
+   session.query(Review)
+   .join(cls)  
+   .filter(Customer.id == customer_id)  
+   .all()
+   )
+  for customer in customer_name:
+    name = (
+     session.query(Customer)
+     .join(Review)  
+     .filter(Review.id == customer.customer_id)  
+     .all()
+      )
+    for name in name:
+        print(f"customer Names: {name.first_name} + {name.last_name}")
+  #  
 
 
 Session = sessionmaker(bind = engine)
@@ -80,13 +118,13 @@ review4 = Review(star_rating=4, restaurant_id = 3, customer_id = 1)
 
 #restaurant1.customer(session,1)
 #restaurant2.review(session,2)
-#customer1.restaurant(session,1)
+customer1.full_name()
 
 
 session.commit()
 
-check = review1.full_review(session, 1)
-print(check)
+#check = review1.full_review(session, 1)
+#print(check)
 
 session.close()
 
