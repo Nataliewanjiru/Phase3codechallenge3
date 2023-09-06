@@ -17,13 +17,20 @@ class Restaurant(Base):
     restaurant_price = Column(Integer)
 
 
-    
-    def  review(self,table,session,restaurant_id):
-      restaurant_reviews = (session.query(table).join(self).filter(Restaurant.id == restaurant_id).all())
-      for review in restaurant_reviews:
-       print(f"Star Rating for the restaurant: {review.star_rating}")
+    #method used to get all the reviews of the restaurant
+    def get_reviews(self,table, session, restaurant_id):
+     restaurant_reviews = (session.query(table).filter(table.restaurant_id == restaurant_id).all())
+     for review in restaurant_reviews:
+        print(f"Star Rating for the restaurant: {review.star_rating}")
 
-    
+
+    def get_customers(self,table1,table2, session, restaurant_id):
+      restaurant_customers = (session.query(table1).filter(table1.restaurant_id == restaurant_id).all())
+      for review in restaurant_customers:
+        customerName = (session.query(table2).filter(table2.id == review.customer_id).first())
+        print(f"Customer Name: {customerName.first_name} {customerName.last_name}")
+        
+
     
 # Create a SQLite database
 Base.metadata.create_all(bind=engine)

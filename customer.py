@@ -17,6 +17,9 @@ class Customer(Base):
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
 
+   
+   
+
    #method that gives all the customer rating
     @classmethod
     def review(cls,table,session,customer_id):
@@ -46,8 +49,7 @@ class Customer(Base):
 
 
 
-# Establish a one-to-many relationship between Customer and Review
-reviews = relationship("Review", back_populates="customer")
+
 
 # Create a SQLite database
 Base.metadata.create_all(bind=engine)
