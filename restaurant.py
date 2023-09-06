@@ -23,7 +23,7 @@ class Restaurant(Base):
      for review in restaurant_reviews:
         print(f"Star Rating for the restaurant: {review.star_rating}")
 
-
+    #method used to get the customer that reviewed the hotel 
     def get_customers(self,table1,table2, session, restaurant_id):
       restaurant_customers = (session.query(table1).filter(table1.restaurant_id == restaurant_id).all())
       for review in restaurant_customers:

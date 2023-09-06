@@ -17,8 +17,6 @@ class Customer(Base):
     first_name = Column(String(100), nullable=False)
     last_name = Column(String(100), nullable=False)
 
-   
-   
 
    #method that gives all the customer rating
     @classmethod
@@ -27,6 +25,8 @@ class Customer(Base):
     # Print the star ratings of the customer's reviews
         for review in customer_reviews:
              print(f"Star Rating: {review.star_rating}")
+
+
 
     #method that gives the restaurant rated
     @classmethod
@@ -37,6 +37,8 @@ class Customer(Base):
          restaurant_name = (session.query(Restaurant).join(table).filter(table.id == restaurant.customer_id).all())
          for name in restaurant_name:
             print(f"Restaurant Names: {name.restaurant_name}")
+ 
+
  
      #method that gives restaurant full name
     def full_name(self):
