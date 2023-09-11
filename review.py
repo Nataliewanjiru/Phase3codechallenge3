@@ -1,13 +1,12 @@
 from sqlalchemy import create_engine, Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from customer import Customer
 from restaurant import Restaurant
 
 
 DATABASE_URI = 'sqlite:///database.db'
 
-engine = create_engine(DATABASE_URI, echo=True)
+engine = create_engine(DATABASE_URI)
 
 Base = declarative_base()
 

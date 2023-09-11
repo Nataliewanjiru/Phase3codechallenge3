@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 DATABASE_URI = 'sqlite:///database.db'
 
-engine = create_engine(DATABASE_URI, echo=True)
+engine = create_engine(DATABASE_URI)
 
 Base = declarative_base()
 

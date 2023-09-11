@@ -1,6 +1,5 @@
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship,declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from customer import *
 from restaurant import *
 from review import *
@@ -11,7 +10,7 @@ reviews = relationship("Review", back_populates="customer")
 
 DATABASE_URI = 'sqlite:///database.db'
 
-engine = create_engine(DATABASE_URI, echo=True)
+engine = create_engine(DATABASE_URI)
 
 Base = declarative_base()
 
@@ -30,11 +29,14 @@ review1 = Review(star_rating=3, restaurant_id=1, customer_id=1)
 review2 = Review(star_rating=2, restaurant_id=2, customer_id=2)
 review3 = Review(star_rating=4, restaurant_id=3, customer_id=3)
 review4 = Review(star_rating=4, restaurant_id=3, customer_id=1)
+review5 = Review(star_rating=3, restaurant_id=1, customer_id=2)
 
+
+#session.add(review5)
 # Add objects to the session
 #session.add_all([customer1, customer2, customer3, restaurant1, restaurant2, restaurant3, review1, review2, review3, review4])
 
-check= restaurant1.get_customers(Review,Customer,session,1)
+check= restaurant1.get_customers(Review,session,1)
 print(check)
 
 # Commit changes to the database
